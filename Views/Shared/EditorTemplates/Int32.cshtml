@@ -1,0 +1,25 @@
+﻿@using EquiMarket.Common;
+
+@{
+    var attributes = new RouteValueDictionary
+                         {
+                            { "class", "text-box single-line"}
+                         };
+
+    string autocompleteUrl = Html.GetAutoCompleteUrl(ViewContext.ViewData.ModelMetadata);
+
+    if (!string.IsNullOrEmpty(autocompleteUrl)) 
+    { 
+        attributes.Add("data-autocomplete-url", autocompleteUrl);
+        attributes.Add("data-autocomplete-valueelementid", Html.GetAutocompleteLabel(ViewContext.ViewData.ModelMetadata));
+        attributes.Add("data-autocomplete-labelelementid", Html.IdForModel());
+    
+        @Html.TextBox("", ViewContext.ViewData.TemplateInfo.FormattedModelValue, attributes);
+    }
+    else
+    { 
+        @Html.TextBox("", ViewContext.ViewData.TemplateInfo.FormattedModelValue, attributes);
+    }
+    
+}
+

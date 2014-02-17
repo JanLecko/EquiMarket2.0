@@ -1,0 +1,135 @@
+﻿@model EquiMarket.Models.Horse
+@using EquiMarket.Common;
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Horse</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+
+            <div id="links">
+                @foreach (var item in Model.Images)
+                {    
+                    <a href="@Href(item.FilePath)" title="@item.ID" data-gallery>
+                        <img src="@Href(item.ThmubnailFilePath)" alt="@item.ID">
+                    </a>
+                }
+            </div>
+            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BirthDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BirthDate)
+                @Html.ValidationMessageFor(model => model.BirthDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sex, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Sex)
+                @Html.ValidationMessageFor(model => model.Sex)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BreedID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.BreedID)
+                @Html.EditorFor(model => model.BreedLabel)
+
+                @*@Html.ValidationMessageFor(model => model.BreedID)*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FathersName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FathersName)
+                @Html.ValidationMessageFor(model => model.FathersName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MothersName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MothersName)
+                @Html.ValidationMessageFor(model => model.MothersName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KVH, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KVH)
+                @Html.ValidationMessageFor(model => model.KVH)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KVP, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KVP)
+                @Html.ValidationMessageFor(model => model.KVP)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="file" name="file" id="file" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,6 @@
+﻿.jumbotron {
+    background-image:url('img/img3.png');
+    /*background-size: cover;*/
+    background-size: contain;
+    
+}

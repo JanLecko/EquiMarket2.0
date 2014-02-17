@@ -1,0 +1,114 @@
+﻿@model EquiMarket.Models.Horse
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<div>
+    
+	<hr />
+
+    <div class="form-group">
+
+        <div id="links">
+            @foreach (var item in Model.Images)
+            {
+                <a href="@Href(item.FilePath)" title="@item.ID" data-gallery>
+                    <img src="@Href(item.ThmubnailFilePath)" alt="@item.ID">
+                </a>
+            }
+        </div>
+
+    </div>
+
+    <hr/>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BreedID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BreedID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FathersName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FathersName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MothersName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MothersName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KVH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KVH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KVP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KVP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

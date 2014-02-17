@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Mvc.Html;
+
+namespace EquiMarket.Common
+{
+    public static class Extensions
+    {
+
+        public static IHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> html, Expression<Func<TModel, TEnum>> expression)
+        {
+            var metadata = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
+
+            var enumType = Nullable.GetUnderlyingType(metadata.ModelType) ?? metadata.ModelType;
+
+            var enumValues = Enum.GetValues(enumType).Cast<object>();
+
+            var items = from enumValue in enumValues
+                        select new SelectListItem
+                        {
+                            Text = enumValue.ToString(),
+                            Value = ((int)enumValue).ToString(),
+                            Selected = enumValue.Equals(metadata.Model)
+                        };
+
+            return html.DropDownListFor(expression, items, string.Empty, null);
+        }
+
+        public static MvcHtmlString AutocompleteFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression, string actionName, string controllerName)
+        {
+            string autocompleteUrl = UrlHelper.GenerateUrl(null, actionName, controllerName,
+                                                           null,
+                                                           html.RouteCollection,
+                                                           html.ViewContext.RequestContext,
+                                                           includeImplicitMvcValues: true);
+
+
+            return html.TextBoxFor(expression, new { data_autocomplete_url = autocompleteUrl });
+        }
+
+
+        private const string AutoCompleteControllerKey = "AutoCompleteController";
+        private const string AutoCompleteActionKey = "AutoCompleteAction";
+        private const string AutoCompleteLabelKey = "AutoCompleteLabel";
+        public static void SetAutoComplete(this ModelMetadata metadata, string controller, string action, string label)
+        {
+            metadata.AdditionalValues[AutoCompleteControllerKey] = controller;
+            metadata.AdditionalValues[AutoCompleteActionKey] = action;
+            metadata.AdditionalValues[AutoCompleteLabelKey] = label;
+        }
+
+        public static string GetAutoCompleteUrl(this HtmlHelper html, ModelMetadata metadata)
+        {
+            if (metadata.AdditionalValues.Count <= 0)
+                return null;
+             
+            string controller = metadata.AdditionalValues.GetString(AutoCompleteControllerKey);
+            string action = metadata.AdditionalValues.GetString(AutoCompleteActionKey);
+
+            if (string.IsNullOrEmpty(controller) || string.IsNullOrEmpty(action))
+                return null;
+            
+            return UrlHelper.GenerateUrl(null, action, controller, null, html.RouteCollection, html.ViewContext.RequestContext, true);
+        }
+
+        public static string GetAutocompleteLabel(this HtmlHelper html, ModelMetadata metadata)
+        {
+            return metadata.AdditionalValues.GetString(AutoCompleteLabelKey);
+        }
+        
+        private static string GetString(this IDictionary<string, object> dictionary, string key)
+        {
+            object value;
+            dictionary.TryGetValue(key, out value);
+            return (string)value;
+        }
+    }
+}
