@@ -1,0 +1,15 @@
+﻿@model ICollection<EquiMarket.Models.Image>
+
+
+    @foreach (var item in Model)
+    {
+        <a href="@Href(item.MediumFullPath)" title="@item.ID" data-gallery>
+            <img src="@Href(item.ThumbnailFullPath)" alt="@item.ID">
+        </a>
+    }
+
+
+
+
+
+

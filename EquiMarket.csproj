@@ -176,6 +176,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Common\AppSettings.cs" />
     <Compile Include="Common\Attributes.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\ImageHelper.cs" />
@@ -417,6 +418,7 @@
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Int32.cshtml" />
+    <Content Include="Views\Horse\_ImageGallery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,8 +6,8 @@ using System.Web;
 
 namespace EquiMarket.DAL
 {
-    public class EquiInitialiser : System.Data.Entity.DropCreateDatabaseAlways<EquiContext> 
-        //System.Data.Entity.DropCreateDatabaseIfModelChanges<EquiContext>
+    public class EquiInitialiser : //System.Data.Entity.DropCreateDatabaseAlways<EquiContext> 
+        System.Data.Entity.DropCreateDatabaseIfModelChanges<EquiContext>
     {
 
         protected override void Seed(EquiContext context)
@@ -55,10 +55,10 @@ namespace EquiMarket.DAL
 
                 var Images = new List<Image>
                 {
-                    new Image { ID = 1, HorseID = 1, FilePath = "~/Files/Old_Sorrel_1.jpg", ThmubnailFilePath = "~/Files/_thumbs/Old_Sorrel_1.jpg"},
-                    new Image { ID = 2, HorseID = 1, FilePath = "~/Files/Old_Sorrel_2.jpg", ThmubnailFilePath = "~/Files/_thumbs/Old_Sorrel_2.jpg"},
-                    new Image { ID = 3, HorseID = 2, FilePath = "~/Files/Poco_Lana.jpg", ThmubnailFilePath = "~/Files/_thumbs/Poco_Lana.jpg"},
-                    new Image { ID = 4, HorseID = 3, FilePath = "~/Files/Joker_B.jpg", ThmubnailFilePath = "~/Files/_thumbs/Joker_B.jpg"}
+                    new Image { ID = 1, HorseID = 1, FileName = "Old_Sorrel_1.jpg" },
+                    new Image { ID = 2, HorseID = 1, FileName = "Old_Sorrel_2.jpg" },
+                    new Image { ID = 3, HorseID = 2, FileName = "Poco_Lana.jpg" },
+                    new Image { ID = 4, HorseID = 3, FileName = "Joker_B.jpg" }
                 };
 
                 Images.ForEach(i => context.Images.Add(i));

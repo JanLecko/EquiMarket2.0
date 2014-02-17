@@ -20,12 +20,7 @@
         <div class="form-group">
 
             <div id="links">
-                @foreach (var item in Model.Images)
-                {    
-                    <a href="@Href(item.FilePath)" title="@item.ID" data-gallery>
-                        <img src="@Href(item.ThmubnailFilePath)" alt="@item.ID">
-                    </a>
-                }
+                @{ Html.RenderPartial("_ImageGallery", Model.Images); }
             </div>
             
         </div>

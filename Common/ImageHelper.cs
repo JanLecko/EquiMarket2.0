@@ -15,14 +15,14 @@ namespace EquiMarket.Common
         // hod to do web.config 
         // nacitat pomocou System.Configuration.ConfigurationManager.AppSettings["XXX"]
 
-        public const string ThumbnailSuffix = "_thumb";
-        public const string MediumSuffix = "_medium";
-        public const string LargeSuffix = "_large";
+        public const string ThumbnailPrefix = "thumb_";
+        public const string MediumPrefix = "medium_";
+        public const string LargePrefix = "large_";
 
         public static Dictionary<string, string> versions = new Dictionary<string, string>(){
-            { ThumbnailSuffix, System.Configuration.ConfigurationManager.AppSettings["ThumbnailSettings"]},
-            { MediumSuffix, System.Configuration.ConfigurationManager.AppSettings["MediumSettings"]},
-            { LargeSuffix, System.Configuration.ConfigurationManager.AppSettings["LargeSettings"]}
+            { ThumbnailPrefix, Common.AppSettings.ThumbnailSettings },
+            { MediumPrefix, Common.AppSettings.MediumSettings },
+            { LargePrefix, Common.AppSettings.LargeSettings }
         };
 
         public static List<Image> SaveImages(HttpRequestBase request, int horseID)
@@ -42,18 +42,18 @@ namespace EquiMarket.Common
                 if (!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
 
                 //Save thumbnail
-                foreach (string suffix in versions.Keys)
+                foreach (string prefix in versions.Keys)
                 {
                     //Generate a filename (GUIDs are best).
-                    string fileName = Path.Combine(uploadFolder, hpf.FileName + suffix);
+                    string fileName = Path.Combine(uploadFolder, prefix + hpf.FileName);
 
                     //Let the image builder add the correct extension based on the output file type
-                    fileName = ImageBuilder.Current.Build(hpf, fileName, new ResizeSettings(versions[suffix]), false, true);
+                    fileName = ImageBuilder.Current.Build(hpf, fileName, new ResizeSettings(versions[prefix]), false, true);
 
                     images.Add(new Image()
                     {
                         HorseID = horseID,
-                        FilePath = fileName
+                        FileName = fileName
                     });
                 }
             }
