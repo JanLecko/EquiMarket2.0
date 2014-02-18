@@ -9,7 +9,7 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm(new { enctype = "multipart/form-data" })) 
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -46,8 +46,7 @@
             @Html.LabelFor(model => model.BreedID, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.HiddenFor(model => model.BreedID)
-                @Html.AutocompleteFor(model => model.BreedID, "Autocomplete", "Breed")
-                @*@Html.ValidationMessageFor(model => model.BreedID)*@
+                @Html.EditorFor(model => model.BreedLabel)
             </div>
         </div>
 
@@ -100,7 +99,7 @@
         </div>
 
         <div class="form-group" id="ImageDiv">
-            <input type="button" name="Add Image" value="Add Image" id="addImageButton" />
+            <input type="file" name="file" value="file" id="file" />
 
         </div>
 

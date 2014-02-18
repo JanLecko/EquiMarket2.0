@@ -48,15 +48,17 @@ namespace EquiMarket.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Name,BirthDate,Sex,Breed,FathersName,MothersName,KVH,KVP,Description,Price")] Horse horse) 
+        public ActionResult Create([Bind(Include="Name,BirthDate,Sex,BreedID,FathersName,MothersName,KVH,KVP,Description,Price")] Horse horse) 
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    horse.Images = Common.ImageHelper.SaveImages(Request, horse.ID);
-
                     db.Horses.Add(horse);
+
+                    db.SaveChanges();
+
+                    horse.Images = Common.ImageHelper.SaveImages(Request, horse);
 
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -93,7 +95,7 @@ namespace EquiMarket.Controllers
         {
             if (ModelState.IsValid)
             {
-                horse.Images = Common.ImageHelper.SaveImages(Request, horse.ID);
+                horse.Images = Common.ImageHelper.SaveImages(Request, horse);
 
                 db.Entry(horse).State = EntityState.Modified;
                 db.SaveChanges();

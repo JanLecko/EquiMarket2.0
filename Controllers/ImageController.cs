@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using EquiMarket.Models;
 using EquiMarket.DAL;
 using System.IO;
+using EquiMarket.Common;
 
 namespace EquiMarket.Controllers
 {
@@ -122,6 +123,33 @@ namespace EquiMarket.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Download(int id, ImageFormat format)
+        {
+            try 
+            {
+                Image img = db.Images.Find(id);
+
+                if(img == null)
+                    return File(new FileStream(ImageHelper.DefaultImagePath(format), FileMode.Open), ImageHelper.ContentType);
+
+                switch (format)
+                {
+                    case ImageFormat.Thumbnail:
+                        return File(new FileStream(img.ThumbnailFullPath, FileMode.Open), ImageHelper.ContentType);
+                    case ImageFormat.Medium:
+                        return File(new FileStream(img.MediumFullPath, FileMode.Open), ImageHelper.ContentType);
+                    case ImageFormat.Large:
+                        return File(new FileStream(img.LargeFullPath, FileMode.Open), ImageHelper.ContentType);
+                    default:
+                        return File(new FileStream(ImageHelper.DefaultImagePath(format), FileMode.Open), ImageHelper.ContentType);
+                }
+            }
+            catch
+            {
+                return File(new FileStream(ImageHelper.DefaultImagePath(format), FileMode.Open), ImageHelper.ContentType);
+                //TODO : Log
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {

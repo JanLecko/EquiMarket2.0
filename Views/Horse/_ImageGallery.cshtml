@@ -3,8 +3,8 @@
 
     @foreach (var item in Model)
     {
-        <a href="@Href(item.MediumFullPath)" title="@item.ID" data-gallery>
-            <img src="@Href(item.ThumbnailFullPath)" alt="@item.ID">
+        <a href="@Url.Action("Download", "Image", new { id = item.ID, format = EquiMarket.Common.ImageFormat.Large })" title="@item.ID" data-gallery>
+            <img src="@Url.Action("Download", "Image", new { id = item.ID, format = EquiMarket.Common.ImageFormat.Thumbnail })" alt="@item.ID">
         </a>
     }
 

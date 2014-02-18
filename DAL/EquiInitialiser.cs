@@ -6,8 +6,8 @@ using System.Web;
 
 namespace EquiMarket.DAL
 {
-    public class EquiInitialiser : //System.Data.Entity.DropCreateDatabaseAlways<EquiContext> 
-        System.Data.Entity.DropCreateDatabaseIfModelChanges<EquiContext>
+    public class EquiInitialiser : System.Data.Entity.DropCreateDatabaseAlways<EquiContext> 
+        //System.Data.Entity.DropCreateDatabaseIfModelChanges<EquiContext>
     {
 
         protected override void Seed(EquiContext context)

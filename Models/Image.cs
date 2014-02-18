@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EquiMarket.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -14,12 +15,14 @@ namespace EquiMarket.Models
         
         public int HorseID { get; set; }
 
+        public virtual Horse Horse { get; set; }
+
         [NotMapped]
         public string ThumbnailFullPath
         {
             get 
             {
-                return Path.Combine(Common.AppSettings.FileUploadPath, HorseID.ToString(), Common.ImageHelper.ThumbnailPrefix + FileName);
+                return ImageHelper.GetImageFullPath(FileName, HorseID, ImageFormat.Thumbnail);
             }
         }
 
@@ -28,7 +31,7 @@ namespace EquiMarket.Models
         {
             get
             {
-                return Path.Combine(Common.AppSettings.FileUploadPath, HorseID.ToString(), Common.ImageHelper.MediumPrefix + FileName);
+                return ImageHelper.GetImageFullPath(FileName, HorseID, ImageFormat.Medium);
             }
         }
 
@@ -37,10 +40,10 @@ namespace EquiMarket.Models
         {
             get
             {
-                return Path.Combine(Common.AppSettings.FileUploadPath, HorseID.ToString(), Common.ImageHelper.LargePrefix + FileName);
+                return ImageHelper.GetImageFullPath(FileName, HorseID, ImageFormat.Large);
             }
         }
 
-        public virtual Horse Horse { get; set; }
+        
     }
 }
