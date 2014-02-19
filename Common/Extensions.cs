@@ -29,7 +29,7 @@ namespace EquiMarket.Common
                             Selected = enumValue.Equals(metadata.Model)
                         };
 
-            return html.DropDownListFor(expression, items, string.Empty, null);
+            return html.DropDownListFor(expression, items, string.Empty, new { @class = "form-control" });
         }
 
         public static MvcHtmlString AutocompleteFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression, string actionName, string controllerName)

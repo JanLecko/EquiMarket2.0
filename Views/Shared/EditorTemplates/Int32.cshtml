@@ -1,9 +1,11 @@
 ﻿@using EquiMarket.Common;
+@model Int32?
 
 @{
     var attributes = new RouteValueDictionary
                          {
-                            { "class", "text-box single-line"}
+                            //{ "class", "text-box single-line"}
+                            { "class", "form-control"}
                          };
 
     string autocompleteUrl = Html.GetAutoCompleteUrl(ViewContext.ViewData.ModelMetadata);
@@ -12,14 +14,11 @@
     { 
         attributes.Add("data-autocomplete-url", autocompleteUrl);
         attributes.Add("data-autocomplete-valueelementid", Html.GetAutocompleteLabel(ViewContext.ViewData.ModelMetadata));
-        attributes.Add("data-autocomplete-labelelementid", Html.IdForModel());
+        attributes.Add("data-autocomplete-labelelementid", Html.IdForModel());    
+    }
     
-        @Html.TextBox("", ViewContext.ViewData.TemplateInfo.FormattedModelValue, attributes);
-    }
-    else
-    { 
-        @Html.TextBox("", ViewContext.ViewData.TemplateInfo.FormattedModelValue, attributes);
-    }
+    
+    @Html.TextBox("", Model.HasValue ? Model.Value.ToString() : "", attributes);
     
 }
 

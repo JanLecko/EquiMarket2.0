@@ -9,108 +9,114 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    
+<div class="col-lg-6 well">
     <div class="form-horizontal">
-        <h4>Horse</h4>
-        <hr />
-        @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new object { })
-                @Html.ValidationMessageFor(model => model.Name)
-            </div>
-        </div>
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <fieldset>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BirthDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BirthDate)
-                @Html.ValidationMessageFor(model => model.BirthDate)
-            </div>
-        </div>
+                @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Sex, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Sex)
-                @Html.ValidationMessageFor(model => model.Sex)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new object { })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BreedID, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.BreedID)
-                @Html.EditorFor(model => model.BreedLabel)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BirthDate, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.BirthDate, "DateTime")
+                        @Html.ValidationMessageFor(model => model.BirthDate)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FathersName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FathersName)
-                @Html.ValidationMessageFor(model => model.FathersName)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sex, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Sex)
+                        @Html.ValidationMessageFor(model => model.Sex)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MothersName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MothersName)
-                @Html.ValidationMessageFor(model => model.MothersName)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BreedID, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.BreedID)
+                        @Html.EditorFor(model => model.BreedLabel)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.KVH, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.KVH)
-                @Html.ValidationMessageFor(model => model.KVH)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FathersName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FathersName)
+                        @Html.ValidationMessageFor(model => model.FathersName)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.KVP, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.KVP)
-                @Html.ValidationMessageFor(model => model.KVP)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MothersName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MothersName)
+                        @Html.ValidationMessageFor(model => model.MothersName)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price)
-                @Html.ValidationMessageFor(model => model.Price)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.KVH, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.KVH)
+                        @Html.ValidationMessageFor(model => model.KVH)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.KVP, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.KVP, "Int32")
+                        @Html.ValidationMessageFor(model => model.KVP)
+                    </div>
+                </div>
 
-        <div class="form-group" id="ImageDiv">
-            <input type="file" name="file" value="file" id="file" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Price)
+                        @Html.ValidationMessageFor(model => model.Price)
+                    </div>
+                </div>
 
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Description)
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
+                </div>
+
+                <div class="form-group" id="ImageDiv">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="file" name="file" value="file" id="file" />
+                    </div>
+                </div>
 
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+
+            </fieldset>
+        }
     </div>
-}
+</div>
+<div class="clearfix"></div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -118,18 +124,18 @@
 
 
 @section Scripts {
-@Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
 
-<script type="text/javascript">
-    $(function () {
+    <script type="text/javascript">
+        $(function () {
 
-        var x = 0;
+            var x = 0;
 
-        $("#addImageButton").click(function () {
-            $("#ImageDiv").append('<input type="file" />');
+            $("#addImageButton").click(function () {
+                $("#ImageDiv").append('<input type="file" />');
+            });
         });
-    });
 
 
-</script>
+    </script>
 }

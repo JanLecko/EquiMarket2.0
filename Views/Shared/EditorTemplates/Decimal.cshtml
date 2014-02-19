@@ -1,0 +1,11 @@
+﻿@model Decimal?
+
+@if (ViewData.ModelMetadata.IsNullableValueType) 
+{ 
+    @Html.TextBox("", Model.HasValue ? Model.Value.ToString() : "", new { @class = "form-control" })
+    
+}
+    
+
+
+

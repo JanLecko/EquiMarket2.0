@@ -43,20 +43,26 @@ namespace EquiMarket.Common
                 if (hpf.ContentLength <= 0)
                     continue;
 
-                //Save thumbnail
+                string fileName = hpf.FileName;
+
+                images.Add(new Image()
+                {
+                    HorseID = horse.ID,
+                    FileName = fileName
+                });
+
+                //Save File to disc
                 foreach (string prefix in versions.Keys)
                 {
-                    //Generate a filename (GUIDs are best).
-                    string fileName = GetImageFullPath(hpf.FileName, horse.ID, (ImageFormat)Enum.Parse(typeof(ImageFormat), prefix));
+                    // TODO: neukladat obrazky z originalnym Nazvom, 
+                    // optimalne by sa mal ulozit povodny nazov suboru zadany userom do db
+                    // a samotny obrazok sa ulozi pod imageID z db.
+
+                    //Generate a filename
+                    string fullPath = GetImageFullPath(fileName, horse.ID, (ImageFormat)Enum.Parse(typeof(ImageFormat), prefix));
 
                     //Let the image builder add the correct extension based on the output file type
-                    fileName = ImageBuilder.Current.Build(hpf, fileName, new ResizeSettings(versions[prefix]), false, true);
-
-                    images.Add(new Image()
-                    {
-                        HorseID = horse.ID,
-                        FileName = fileName
-                    });
+                    fullPath = ImageBuilder.Current.Build(hpf, fullPath, new ResizeSettings(versions[prefix]), false, false); 
                 }
             }
             return images;
@@ -76,6 +82,7 @@ namespace EquiMarket.Common
                     return string.Empty;
             }   
         }
+
 
         public static string GetUploadPath(int horseID, bool create)
         {

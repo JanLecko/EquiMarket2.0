@@ -22,6 +22,12 @@ namespace EquiMarket.Controllers
             return View(db.Horses.ToList());
         }
 
+        public ActionResult List()
+        {
+            return View(db.Horses.ToList());
+        }
+
+
         // GET: /Horse/Details/5
         public ActionResult Details(int? id)
         {
