@@ -53,16 +53,16 @@ namespace EquiMarket.DAL
                 Horses.ForEach(h => context.Horses.Add(h));
                 context.SaveChanges();
 
-                var Images = new List<Image>
-                {
-                    new Image { ID = 1, HorseID = 1, FileName = "Old_Sorrel_1.jpg" },
-                    new Image { ID = 2, HorseID = 1, FileName = "Old_Sorrel_2.jpg" },
-                    new Image { ID = 3, HorseID = 2, FileName = "Poco_Lana.jpg" },
-                    new Image { ID = 4, HorseID = 3, FileName = "Joker_B.jpg" }
-                };
+                //var Images = new List<Image>
+                //{
+                //    new Image { ID = 1, HorseID = 1, FileName = "Old_Sorrel_1.jpg" },
+                //    new Image { ID = 2, HorseID = 1, FileName = "Old_Sorrel_2.jpg" },
+                //    new Image { ID = 3, HorseID = 2, FileName = "Poco_Lana.jpg" },
+                //    new Image { ID = 4, HorseID = 3, FileName = "Joker_B.jpg" }
+                //};
 
-                Images.ForEach(i => context.Images.Add(i));
-                context.SaveChanges();
+                //Images.ForEach(i => context.Images.Add(i));
+                //context.SaveChanges();
             }
             catch (Exception ex)
             {

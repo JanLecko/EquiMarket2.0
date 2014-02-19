@@ -1,12 +1,19 @@
 ﻿@model ICollection<EquiMarket.Models.Image>
 
+@{
+    Int32? maxNumber = ViewData["MaxNumber"] as Int32?;
+    int count = 1;
+}
 
-    @foreach (var item in Model)
-    {
-        <a href="@Url.Action("Download", "Image", new { id = item.ID, format = EquiMarket.Common.ImageFormat.Large })" title="@item.ID" data-gallery>
-            <img src="@Url.Action("Download", "Image", new { id = item.ID, format = EquiMarket.Common.ImageFormat.Thumbnail })" alt="@item.ID">
-        </a>
-    }
+@foreach (var item in Model)
+{
+    <a href="@Url.Action("Download", "Image", new { id = item.ID, format = EquiMarket.Common.ImageFormat.Large })" title="@item.ID" data-gallery>
+        <img src="@Url.Action("Download", "Image", new { id = item.ID, format = EquiMarket.Common.ImageFormat.Thumbnail })" alt="@item.ID">
+    </a>
+    
+    count++;
+    if (count == maxNumber) { break; }
+}
 
 
 

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using EquiMarket.Models;
 using EquiMarket.DAL;
 using System.IO;
+using System.Data.Entity.Infrastructure;
 
 namespace EquiMarket.Controllers
 {
@@ -19,12 +20,13 @@ namespace EquiMarket.Controllers
         // GET: /Horse/
         public ActionResult Index()
         {
+            // TODO: load only limited number of images (Explicit loading?)
             return View(db.Horses.ToList());
         }
 
         public ActionResult List()
         {
-            return View(db.Horses.ToList());
+            return View(db.Horses.Include(x => x.Images).ToList());
         }
 
 
@@ -83,8 +85,11 @@ namespace EquiMarket.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
-            Horse horse = db.Horses.Find(id);
+
+            Horse horse = db.Horses
+                .Include(i => i.Images)
+                .Where(i => i.ID == id)
+                .Single();
             
             if (horse == null)
                 return HttpNotFound();
@@ -97,18 +102,34 @@ namespace EquiMarket.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,Name,BirthDate,Sex,BreedID,FathersName,MothersName,KVH,KVP,Description,Price")] Horse horse)
+        public ActionResult Edit(int? id, FormCollection formCollection)
         {
-            if (ModelState.IsValid)
+                
+            Horse horseToUpdate = db.Horses
+                .Include(i => i.Images)
+                .Where(i => i.ID == id)
+                .Single();
+
+            if (TryUpdateModel(horseToUpdate, "",
+                new string[] { "Name", "BirthDate", "Sex", "BreedID", "FathersName", "MothersName", "KVH", "KVP", "Description", "Price" }))
             {
-                horse.Images = Common.ImageHelper.SaveImages(Request, horse);
+                try
+                {
+                    horseToUpdate.Images = new List<Image>();
+                    horseToUpdate.Images = Common.ImageHelper.SaveImages(Request, horseToUpdate);
 
-                db.Entry(horse).State = EntityState.Modified;
-                db.SaveChanges();
+                    db.Entry(horseToUpdate).State = EntityState.Modified;
+                    db.SaveChanges();
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
             }
-            return View(horse);
+
+            return View(horseToUpdate);
         }
 
         // GET: /Horse/Delete/5

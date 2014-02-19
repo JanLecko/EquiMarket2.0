@@ -1,0 +1,25 @@
+﻿@model IEnumerable<EquiMarket.Models.Horse>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+@foreach (var item in Model) {
+
+<div class="col-lg-4">
+    <div class="panel panel-primary">
+        
+        <div class="panel-heading">
+            <h3 class="panel-title">@item.Name</h3>
+        </div>
+
+        <div class="panel-body">
+            <div id="col-xs-10">
+                @{ Html.RenderPartial("_ImageGallery", item.Images, new ViewDataDictionary{ {"MaxNumber", "3"}}); }
+            </div>
+        </div>
+
+    </div>
+</div>
+}
