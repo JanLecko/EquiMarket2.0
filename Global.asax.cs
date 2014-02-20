@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EquiMarket.Models.ModelBinders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,7 @@ namespace EquiMarket
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());
         }
     }
 }

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using EquiMarket.Common;
 using EquiMarket.DAL;
+using System.Data.Entity.Spatial;
 
 namespace EquiMarket.Models
 {
@@ -66,6 +67,7 @@ namespace EquiMarket.Models
 
         public bool IsBreedingOffer { get; set; }
 
+        public DbGeography Location { get; set; }
 
         //public int UserId { get; set; }
 

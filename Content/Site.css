@@ -49,3 +49,6 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+textarea.form-control {
+    height: 200px;
+}

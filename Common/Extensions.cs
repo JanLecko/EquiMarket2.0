@@ -13,6 +13,14 @@ namespace EquiMarket.Common
     public static class Extensions
     {
 
+       
+        public static MvcHtmlString ClientIdFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression)
+        {
+            return MvcHtmlString.Create(
+                htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(ExpressionHelper.GetExpressionText(expression)));
+        }
+        
+
         public static IHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> html, Expression<Func<TModel, TEnum>> expression)
         {
             var metadata = ModelMetadata.FromLambdaExpression(expression, html.ViewData);

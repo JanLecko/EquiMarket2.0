@@ -111,7 +111,7 @@ namespace EquiMarket.Controllers
                 .Single();
 
             if (TryUpdateModel(horseToUpdate, "",
-                new string[] { "Name", "BirthDate", "Sex", "BreedID", "FathersName", "MothersName", "KVH", "KVP", "Description", "Price" }))
+                new string[] { "Name", "BirthDate", "Sex", "BreedID", "FathersName", "MothersName", "KVH", "KVP", "Description", "Price", "Location" }))
             {
                 try
                 {

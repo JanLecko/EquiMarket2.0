@@ -8,6 +8,7 @@
 
 <h2>Create</h2>
 
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 <div class="col-lg-6 well">
     <div class="form-horizontal">
@@ -99,6 +100,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Location)
+                    </div>
+                </div>
+
                 <div class="form-group" id="ImageDiv">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="file" name="file" value="file" id="file" />
@@ -125,7 +133,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
+    
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
         $(function () {
 

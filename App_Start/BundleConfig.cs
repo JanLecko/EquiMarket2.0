@@ -9,7 +9,8 @@ namespace EquiMarket
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
-                "~/Scripts/Script.js"));
+                "~/Scripts/Script.js",
+                "~/Scripts/maps.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
@@ -36,10 +37,10 @@ namespace EquiMarket
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/yeti.bootstrap.min.css",
-                      "~/Content/site.css",
                       "~/Content/themes/base/jquery-ui.css",
                       "~/Content/CustomBootstrap.css",
-                      "~/Content/themes/base/jquery.ui.autocomplete.css"));
+                      "~/Content/themes/base/jquery.ui.autocomplete.css",
+                      "~/Content/site.css"));
 
             //BlueImp css 
             bundles.Add(new StyleBundle("~/Content/BlueImp").Include(

@@ -108,6 +108,13 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Location)
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="file" name="file" id="file" />
                 </div>
@@ -129,5 +136,6 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }
