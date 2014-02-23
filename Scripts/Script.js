@@ -1,33 +1,6 @@
-﻿
+﻿$(document).ready(function () {
 
-//$(document).ready(function () {
-//    $('*[data-autocomplete-url]')
-//        .each(function () {
-//            $(this).autocomplete({
-//                dataType:"json",
-//                source: $(this).data("autocomplete-url"),
-//                messages: {
-//                    noResults: '',
-//                    results: function() {}
-//                },
-//                response: function (event, ui) {
-//                    $.map(ui.content, function (breed) {
-//                        ui.content.push({ label: breed.TitleSK, value: breed.ID });
-//                    });
-//                },
-//                change: function (event, ui) {
-//                    if (!ui.item) {
-//                        this.value = '';
-//                    } else {
-                        
-//                    }
-//                }
-//            });
-//        });
-//});
-
-
-$(document).ready(function () {
+    // autocompleete
     $('*[data-autocomplete-url]')
         .each(function () {
             $(this).autocomplete({
@@ -79,5 +52,27 @@ $(document).ready(function () {
     $.validator.methods.number = function (value, element) {
         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
     }
+
+    // jQuery dialog
+
+    var dialogOptions = {
+        modal: true,
+        height: 1000,
+        width: 700,
+        draggable: false,
+        resizable: false,
+        buttons: {
+            Close: function () {
+                $(this).dialog("close");
+            }
+        }
+    };
+
+    $('.dialogOpen').click(function () {
+        var $dialog = $('#' + $(this).attr('id') + '_map');// dialog ID based on click element ID
+        //var dialogType = $(this).attr('dialogType');
+        $dialog.dialog(dialogOptions); // pass the appropriate options object to the dialog call dialogOptions[dialogType]
+        return false;
+    });
 });
 

@@ -9,11 +9,16 @@ function initialize() {
     //48.7417008797654, 19.295768737793
     var latlng = new google.maps.LatLng(48.741700, 19.295768); // default
     var options = {
-        zoom: 24, center: latlng,
+        zoom: 7, center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         maxZoom: 14 //so extents zoom doesn't go nuts
     };
     maps.mapInstance = new google.maps.Map(document.getElementById(maps.mapInstanceId), options);
+
+    //autocomplete
+    var input = document.getElementById('pac-input');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', maps.mapInstance);
 
     google.maps.event.addListener(maps.mapInstance, 'click', function (event) {
         placeMarker(event.latLng);
@@ -25,6 +30,41 @@ function initialize() {
             var bound = new google.maps.LatLngBounds();
             bound.extend(maps.markerToSet);
             maps.mapInstance.fitBounds(bound);
+        }
+    });
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        infowindow.close();
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            return;
+        }
+
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+        }
+        marker.setIcon(/** @type {google.maps.Icon} */({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+        }));
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+
+        var address = '';
+        if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
         }
     });
 }
@@ -48,3 +88,4 @@ function placeMarker(location) {
 $(function () {
     initialize();
 });
+

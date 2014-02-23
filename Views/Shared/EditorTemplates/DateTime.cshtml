@@ -1,5 +1,10 @@
 ﻿@model DateTime?
 
+@{
+    
+    var x = ViewData.ModelMetadata.DisplayFormatString;
+}
+
 @Html.TextBox("", Model.HasValue ? Model.Value.ToShortDateString() : "", new { @class = "form-control", type = "date" })
 
 
