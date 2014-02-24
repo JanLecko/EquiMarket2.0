@@ -57,8 +57,8 @@
 
     var dialogOptions = {
         modal: true,
-        height: 1000,
-        width: 700,
+        height: 700,
+        width: 1000,
         draggable: false,
         resizable: false,
         buttons: {

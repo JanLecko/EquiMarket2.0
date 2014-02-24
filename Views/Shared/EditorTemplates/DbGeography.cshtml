@@ -2,19 +2,25 @@
 
 @Html.HiddenFor(model => model)
 
+@{
+    string hiddenInputId = Html.ClientIdFor(model => model).ToString();
+}
+
 @if (Model != null)
 {
     <script>
         $(function () {
             maps.markerToSet = new google.maps.LatLng(@Model.Latitude.Value.ToString("G") , @Model.Longitude.Value.ToString("G"));
+            $('#open_' + @(hiddenInputId) + '_map').on( "dialogopen", function( event, ui ) {
+                // init map
+                initialize();
+            } );
         });
     </script>
     
 }
 
-@{ 
-    string hiddenInputId = Html.ClientIdFor(model => model).ToString(); 
-}
+
 
 <span id="open_@(hiddenInputId)" class="dialogOpen">
 
@@ -31,6 +37,6 @@ else
 
 <div id="open_@(hiddenInputId)_map" title="Basic dialog" style="display:none;">
 
-    <div id="map_canvas" data-textboxid="@hiddenInputId" style="width: 600px; height: 800px"></div>
+    <div id="map_canvas" data-textboxid="@hiddenInputId" style="width: 100%; height: 100%"></div>
 
 </div>
