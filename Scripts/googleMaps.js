@@ -108,6 +108,8 @@ function initialize(id) {
         }));
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
+        SetStaticImageLocation(id, place.geometry.location);
+
 
         var address = '';
         if (place.address_components) {
