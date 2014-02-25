@@ -27,11 +27,11 @@
 
 @if (Model != null && Model.Latitude.HasValue && Model.Longitude.HasValue)
 {
-    <img src="http://maps.googleapis.com/maps/api/staticmap?center=@(Model.Latitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))),@(Model.Longitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))&zoom=9&size=300x200&maptype=roadmap&markers=color:blue%7Clabel:S%7C@(Model.Latitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))),@(Model.Longitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))&sensor=false">
+    <img data-static-image="@(hiddenInputId)" src="http://maps.googleapis.com/maps/api/staticmap?center=@(Model.Latitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))),@(Model.Longitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))&zoom=9&size=300x200&maptype=roadmap&markers=color:blue%7Clabel:S%7C@(Model.Latitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))),@(Model.Longitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))&sensor=false">
 }
 else
 {
-    <img src="http://maps.googleapis.com/maps/api/staticmap?center=Ľubietovský+Vepor,+Ľubietová,+Slovakia&zoom=6&size=300x200&maptype=roadmap&sensor=false">    
+    <img data-static-image="@(hiddenInputId)" src="http://maps.googleapis.com/maps/api/staticmap?center=Ľubietovský+Vepor,+Ľubietová,+Slovakia&zoom=6&size=300x200&maptype=roadmap&sensor=false">
 }
 
 </span>

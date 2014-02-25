@@ -7,7 +7,7 @@ maps.marker = marker;
 maps.mapInstanceId = "map_canvas";
 maps.markerToSet = null;
 
-function initialize() {
+function initialize(id) {
     //48.7417008797654, 19.295768737793
     //48.716389, 19.458611
     
@@ -76,6 +76,7 @@ function initialize() {
 
     google.maps.event.addListener(maps.mapInstance, 'click', function (event) {
         placeMarker(event.latLng);
+        SetStaticImageLocation(id, event.latLng);
     });
 
     google.maps.event.addListenerOnce(maps.mapInstance, 'idle', function (event) {
@@ -145,6 +146,13 @@ function boundPosition() {
 
 }
 
+function SetStaticImageLocation(id, location) {
+    $("img[data-static-image]").attr('src', 'http://maps.googleapis.com/maps/api/staticmap?center=' + location.lat() + ',' + location.lng() + '&zoom=9&size=300x200&maptype=roadmap&sensor=false&markers=color:blue%7Clabel:S%7C' + location.lat() + ',' + location.lng());
+
+
+}
+
+
 $(function () {
     $('.mapOpen').click(function () {
         var $dialog = $('#' + $(this).attr('id') + '_map');// dialog ID based on click element ID
@@ -155,7 +163,7 @@ $(function () {
         return false;
     });
 
-    initialize(); //init map
+    initialize($(this).attr('id')); //init map
 });
 
 var dialogOptions = {
