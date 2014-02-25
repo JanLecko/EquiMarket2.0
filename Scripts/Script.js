@@ -72,6 +72,7 @@
         var $dialog = $('#' + $(this).attr('id') + '_map');// dialog ID based on click element ID
         //var dialogType = $(this).attr('dialogType');
         $dialog.dialog(dialogOptions); // pass the appropriate options object to the dialog call dialogOptions[dialogType]
+        $(".ui-dialog-titlebar").hide();
         return false;
     });
 });
