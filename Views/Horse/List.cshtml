@@ -2,24 +2,45 @@
 @{
     ViewBag.Title = "List";
 }
+<div class="page-header">
+    <h1>Horses for sale</h1>
+</div>
 
-<h2>List</h2>
+@foreach (var item in Model)
+{
 
-@foreach (var item in Model) {
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
 
-<div class="col-lg-4">
-    <div class="panel panel-primary">
-        
-        <div class="panel-heading">
-            <h3 class="panel-title">@item.Name</h3>
-        </div>
+            <div class="panel-heading">
+                <h3 class="panel-title">@item.Name</h3>
+            </div>
 
-        <div class="panel-body">
-            <div id="col-xs-10">
-                @{ Html.RenderPartial("_ImageGallery", item.Images, new ViewDataDictionary{ {"MaxNumber", "3"}}); }
+            <div class="panel-body">
+                <div id="page-header">
+                    @{ Html.RenderPartial("_ImageGallery", item.Images, new ViewDataDictionary { { "MaxNumber", "3" } }); }
+                </div>
+
+                <div id="col-xs-10">
+                    <p class="lead">
+                        @item.BreedLabel
+                    </p>
+
+                </div>
+
+                <div id="col-xs-10">
+                    @item.Sex,
+                    @item.BirthDate.ToShortDateString()
+                </div>
+
+                <div id="col-xs-10">
+                    @String.Format("{0:C}", item.Price.Value)
+                </div>
+
+                <div id="col-xs-10">
+                    @Html.ActionLink("Details", "Details", new { id = item.ID })
+                </div>
             </div>
         </div>
-
     </div>
-</div>
 }
