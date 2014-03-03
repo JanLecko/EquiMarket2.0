@@ -1,7 +1,9 @@
-﻿using EquiMarket.Models;
+﻿using EquiMarket.DAL;
+using EquiMarket.Models;
 using ImageResizer;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -32,9 +34,9 @@ namespace EquiMarket.Common
             { ImageFormat.Large.ToString(), Common.AppSettings.LargeSettings }
         };
 
-        public static List<Image> SaveImages(HttpRequestBase request, Horse horse)
+        public static List<string> SaveImages(HttpRequestBase request, int horseID)
         {
-            var images = new List<Image>();
+            var images = new List<string>();
 
             foreach (string fileKey in request.Files.Keys)
             {
@@ -44,13 +46,8 @@ namespace EquiMarket.Common
                     continue;
 
                 string fileName = hpf.FileName;
-
-                images.Add(new Image()
-                {
-                    HorseID = horse.ID,
-                    FileName = fileName
-                });
-
+                images.Add(fileName);
+                
                 //Save File to disc
                 foreach (string prefix in versions.Keys)
                 {
@@ -59,7 +56,7 @@ namespace EquiMarket.Common
                     // a samotny obrazok sa ulozi pod imageID z db.
 
                     //Generate a filename
-                    string fullPath = GetImageFullPath(fileName, horse.ID, (ImageFormat)Enum.Parse(typeof(ImageFormat), prefix));
+                    string fullPath = GetImageFullPath(fileName, horseID, (ImageFormat)Enum.Parse(typeof(ImageFormat), prefix));
 
                     //Let the image builder add the correct extension based on the output file type
                     fullPath = ImageBuilder.Current.Build(hpf, fullPath, new ResizeSettings(versions[prefix]), false, false); 
