@@ -13,7 +13,12 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         maxZoom: 14 //so extents zoom doesn't go nuts
     };
-    maps.mapInstance = new google.maps.Map(document.getElementById(maps.mapInstanceId), options);
+
+    var mapDiv = document.getElementById(maps.mapInstanceId);
+    maps.mapInstance = new google.maps.Map(mapDiv, options);
+    mapDiv.style.width = '100%';
+    mapDiv.style.height = '100%';
+
 
     //autocomplete
     var input = document.getElementById('pac-input');
