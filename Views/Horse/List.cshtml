@@ -1,25 +1,105 @@
-﻿@model IEnumerable<EquiMarket.Models.Horse>
+﻿@model PagedList.IPagedList<EquiMarket.Models.Horse>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 @{
     ViewBag.Title = "List";
+    
+    string createdClass = ""; 
+    string ageClass = "";
+    string priceClass = "";
+    string kvhClass = "";
+
+    string sortOrder = Request.Params["sortOrder"];
+    
+    if(!String.IsNullOrWhiteSpace( sortOrder)) {
+        if (sortOrder.Contains("Created")) { createdClass = "active"; }
+        else if (sortOrder.Contains("Age")) { ageClass = "active"; }
+        else if (sortOrder.Contains("Price")) { priceClass = "active"; }
+        else if (sortOrder.Contains("KVH")) { kvhClass = "active"; }
+    }
+    else { 
+        createdClass = "active";
+    }
 }
+<div class="page-header">
+    <h1>Horses for sale</h1>
+</div>
 
-<h2>List</h2>
 
-@foreach (var item in Model) {
+@*@Html.Partial("_Filter", )*@
 
-<div class="col-lg-4">
-    <div class="panel panel-primary">
-        
-        <div class="panel-heading">
-            <h3 class="panel-title">@item.Name</h3>
-        </div>
 
-        <div class="panel-body">
-            <div id="col-xs-10">
-                @{ Html.RenderPartial("_ImageGallery", item.Images, new ViewDataDictionary{ {"MaxNumber", "3"}}); }
-            </div>
-        </div>
+<div class="col-lg-12">
+    @*sorter*@
+
+    <h3>Filter</h3>
+
+    <div class="well well-lg">
 
     </div>
+
+    <hr />
+
+    <h3>Sorter</h3>
+
+    <div class="bs-example">
+        <ul class="nav nav-pills">
+            <li class="@createdClass" > @Html.ActionLink("Created", "List", new { sortOrder = ViewBag.CreatedSortParm })</li>
+            <li class="@ageClass" >@Html.ActionLink("Age", "List", new { sortOrder = ViewBag.AgeSortParm })</li>
+            <li class="@priceClass" >@Html.ActionLink("Price", "List", new { sortOrder = ViewBag.PriceSortParm })</li>
+            <li class="@kvhClass" >@Html.ActionLink("KVH", "List", new { sortOrder = ViewBag.KVHSortParm })</li>
+        </ul>
+    </div>
+
+    <hr />
 </div>
+
+
+@foreach (var item in Model)
+{
+
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">@item.Name</h3>
+            </div>
+
+            <div class="panel-body">
+                <div id="page-header">
+                    @{ Html.RenderPartial("_ImageGallery", item.Images, new ViewDataDictionary { { "MaxNumber", "3" } }); }
+                </div>
+
+                <div id="col-xs-10">
+                    <p class="lead">
+                        @item.BreedLabel
+                    </p>
+
+                </div>
+
+                <div id="col-xs-10">
+                    @item.Sex,
+                    @item.BirthDate.ToShortDateString()
+                </div>
+
+                <div id="col-xs-10">
+                    @String.Format("{0:C}", item.Price.Value)
+                </div>
+
+                <div id="col-xs-10">
+                    @Html.ActionLink("Details", "Details", new { id = item.ID })
+                </div>
+            </div>
+        </div>
+    </div>
 }
+
+
+<br />
+
+<div class="col-lg-12">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("List", new { page, sortOrder = ViewBag.CurrentSort }))
+</div>

@@ -12,6 +12,10 @@ namespace EquiMarket.Models.ModelBinders
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+
+            if (String.IsNullOrWhiteSpace(valueProviderResult.AttemptedValue))
+                return null;
+            
             string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');
             string point = string.Format("POINT ({0} {1})", latLongStr[1], latLongStr[0]);
             //4326 format puts LONGITUDE first then LATITUDE

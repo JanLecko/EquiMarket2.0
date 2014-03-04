@@ -10,6 +10,7 @@ using EquiMarket.Models;
 using EquiMarket.DAL;
 using System.IO;
 using System.Data.Entity.Infrastructure;
+using PagedList;
 
 namespace EquiMarket.Controllers
 {
@@ -24,9 +25,49 @@ namespace EquiMarket.Controllers
             return View(db.Horses.ToList());
         }
 
-        public ActionResult List()
+        public ActionResult List(string sortOrder, int? page)
         {
-            return View(db.Horses.Include(x => x.Images).ToList());
+            var horses = db.Horses.Include(x => x.Images);
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.CreatedSortParm = String.IsNullOrEmpty(sortOrder) ? "Created_desc" : "";
+            ViewBag.AgeSortParm = sortOrder == "Age" ? "Age_desc" : "Age";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "Price_desc" : "Price";
+            ViewBag.KVHSortParm = sortOrder == "KVH" ? "KVH_desc" : "KVH";
+
+
+            switch (sortOrder)
+            {
+                case "Created_desc":
+                    horses = horses.OrderByDescending(i => i.Created);
+                    break;
+                case "Age":
+                    horses = horses.OrderBy(i => i.BirthDate);
+                    break;
+                case "Age_desc":
+                    horses = horses.OrderByDescending(i => i.BirthDate);
+                    break;
+                case "Price":
+                    horses = horses.OrderBy(i => i.Price);
+                    break;
+                case "Price_desc":
+                    horses = horses.OrderByDescending(i => i.Price);
+                    break;
+                case "KVH":
+                    horses = horses.OrderBy(i => i.KVH);
+                    break;
+                case "KVH_desc":
+                    horses = horses.OrderByDescending(i => i.KVH);
+                    break;
+                default:
+                    horses = horses.OrderBy(i => i.Created);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(horses.ToPagedList(pageNumber, pageSize));
         }
 
 
@@ -62,13 +103,26 @@ namespace EquiMarket.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    horse.Created = DateTime.Now;
                     db.Horses.Add(horse);
 
                     db.SaveChanges();
 
-                    horse.Images = Common.ImageHelper.SaveImages(Request, horse);
+                    List<String> list = Common.ImageHelper.SaveImages(Request, horse.ID);
 
+                    foreach (var item in list)
+                    {
+                        var image = new Image() {
+                            FileName = item,
+                            HorseID = horse.ID
+                        };
+
+                        horse.Images.Add(image);
+                    }
+
+                    db.Entry(horse).State = EntityState.Modified;
                     db.SaveChanges();
+
                     return RedirectToAction("Index");
                 }
             }
@@ -115,8 +169,18 @@ namespace EquiMarket.Controllers
             {
                 try
                 {
-                    horseToUpdate.Images = new List<Image>();
-                    horseToUpdate.Images = Common.ImageHelper.SaveImages(Request, horseToUpdate);
+                    var list = Common.ImageHelper.SaveImages(Request, horseToUpdate.ID);
+
+                    foreach (var item in list) 
+                    {
+                        var image = new Image()
+                        {
+                            FileName = item,
+                            HorseID = horseToUpdate.ID
+                        };
+
+                        horseToUpdate.Images.Add(image);
+                    }
 
                     db.Entry(horseToUpdate).State = EntityState.Modified;
                     db.SaveChanges();

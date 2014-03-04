@@ -67,6 +67,13 @@ namespace EquiMarket.Models
 
         public bool IsBreedingOffer { get; set; }
 
+        public int ViewsCount { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public System.DateTime Created { get; set; }
+
+
         public DbGeography Location { get; set; }
 
         //public int UserId { get; set; }

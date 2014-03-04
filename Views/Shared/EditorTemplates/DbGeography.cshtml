@@ -2,35 +2,44 @@
 
 @Html.HiddenFor(model => model)
 
+@{
+    string hiddenInputId = Html.ClientIdFor(model => model).ToString();
+}
+
 @if (Model != null)
 {
-    <script>
-        $(function () {
-            maps.markerToSet = new google.maps.LatLng(@Model.Latitude.Value.ToString("G") , @Model.Longitude.Value.ToString("G"));
-        });
-    </script>
-    
+    @Html.Script(
+        @<script type="text/javascript">
+            $(function () {
+                maps.markerToSet = new google.maps.LatLng(@Model.Latitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")) , @Model.Longitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")));
+            
+                @*$('#open_' + @(hiddenInputId) + '_map').on( "dialogopen", function( event, ui ) {
+                    // init map
+                    initialize();
+                } );*@
+            });
+        </script>
+    )
 }
 
-@{ 
-    string hiddenInputId = Html.ClientIdFor(model => model).ToString(); 
-}
 
-<span id="open_@(hiddenInputId)" class="dialogOpen">
+<span id="open_@(hiddenInputId)" class="mapOpen">
 
 @if (Model != null && Model.Latitude.HasValue && Model.Longitude.HasValue)
 {
-    <img src="http://maps.googleapis.com/maps/api/staticmap?center=@(Model.Latitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))),@(Model.Longitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))&zoom=9&size=300x200&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&sensor=false">    
+    <img data-static-image="@(hiddenInputId)" src="http://maps.googleapis.com/maps/api/staticmap?center=@(Model.Latitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))),@(Model.Longitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))&zoom=9&size=300x200&maptype=roadmap&markers=color:blue%7Clabel:S%7C@(Model.Latitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))),@(Model.Longitude.Value.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))&sensor=false">
 }
 else
 {
-    <img src="http://maps.googleapis.com/maps/api/staticmap?center=Ľubietovský+Vepor,+Ľubietová,+Slovakia&zoom=6&size=300x200&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&sensor=false">    
+    <img data-static-image="@(hiddenInputId)" src="http://maps.googleapis.com/maps/api/staticmap?center=Ľubietovský+Vepor,+Ľubietová,+Slovakia&zoom=6&size=300x200&maptype=roadmap&sensor=false">
 }
 
 </span>
 
 <div id="open_@(hiddenInputId)_map" title="Basic dialog" style="display:none;">
 
-    <div id="map_canvas" data-textboxid="@hiddenInputId" style="width: 600px; height: 800px"></div>
+    <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+
+    <div id="map_canvas" data-textboxid="@hiddenInputId" style="width: 100%; height: 100%"></div>
 
 </div>

@@ -9,8 +9,10 @@ namespace EquiMarket
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
-                "~/Scripts/Script.js",
-                "~/Scripts/maps.js"));
+                "~/Scripts/Script.js"
+                ,"~/Scripts/googleMaps.js"
+                //, "~/Scripts/hereMaps.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",

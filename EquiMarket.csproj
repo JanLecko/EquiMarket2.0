@@ -61,6 +61,12 @@
       <HintPath>packages\ImageResizer.Plugins.SimpleFilters.3.4.2\lib\ImageResizer.Plugins.SimpleFilters.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -208,6 +214,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PagedList.css" />
     <Content Include="Files\Old_Sorrel_1.jpg" />
     <Content Include="Files\Old_Sorrel_2.jpg" />
     <Content Include="Files\_thumbs\Joker_B.jpg" />
@@ -365,6 +372,7 @@
     <Content Include="Content\jQuery-File-Upload-9.5.4\server\php\index.php" />
     <Content Include="Content\jQuery-File-Upload-9.5.4\server\php\UploadHandler.php" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="Scripts\hereMaps.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
@@ -375,7 +383,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\maps.js" />
+    <Content Include="Scripts\googleMaps.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
