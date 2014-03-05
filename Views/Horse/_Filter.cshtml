@@ -1,0 +1,33 @@
+﻿@using EquiMarket.Models.SearchModels
+@model HorseSearchModel
+
+
+<div class="well well-lg">
+
+    <h3>Filter</h3>
+
+    @using (Html.BeginForm("List", "Horse", FormMethod.Get))
+    {
+        <fieldset>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PriceFrom, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PriceFrom)
+                    @Html.ValidationMessageFor(model => model.PriceFrom)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PriceTo, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PriceTo)
+                    @Html.ValidationMessageFor(model => model.PriceTo)
+                </div>
+            </div>
+
+
+            <input type="submit" value="Search" />
+        </fieldset>
+    }
+</div>
+

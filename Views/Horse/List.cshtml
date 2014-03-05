@@ -1,9 +1,12 @@
 ﻿@model PagedList.IPagedList<EquiMarket.Models.Horse>
 @using PagedList.Mvc;
+@using EquiMarket.Models.SearchModels
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "List";
+
+    HorseSearchModel searchModel = ViewBag.SearchModel as HorseSearchModel;
     
     string createdClass = ""; 
     string ageClass = "";
@@ -27,18 +30,14 @@
 </div>
 
 
-@*@Html.Partial("_Filter", )*@
+
+@*@Html.Partial("_Sorter", )*@
 
 
 <div class="col-lg-12">
-    @*sorter*@
-
-    <h3>Filter</h3>
-
-    <div class="well well-lg">
-
-    </div>
-
+    
+    @Html.Partial("_Filter", ViewBag.SearchModel as HorseSearchModel)
+    
     <hr />
 
     <h3>Sorter</h3>

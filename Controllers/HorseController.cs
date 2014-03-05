@@ -11,6 +11,7 @@ using EquiMarket.DAL;
 using System.IO;
 using System.Data.Entity.Infrastructure;
 using PagedList;
+using EquiMarket.Models.SearchModels;
 
 namespace EquiMarket.Controllers
 {
@@ -25,7 +26,7 @@ namespace EquiMarket.Controllers
             return View(db.Horses.ToList());
         }
 
-        public ActionResult List(string sortOrder, int? page)
+        public ActionResult List(HorseSearchModel searchModel, string sortOrder, int? page)
         {
             var horses = db.Horses.Include(x => x.Images);
 
@@ -34,7 +35,7 @@ namespace EquiMarket.Controllers
             ViewBag.AgeSortParm = sortOrder == "Age" ? "Age_desc" : "Age";
             ViewBag.PriceSortParm = sortOrder == "Price" ? "Price_desc" : "Price";
             ViewBag.KVHSortParm = sortOrder == "KVH" ? "KVH_desc" : "KVH";
-
+            ViewBag.SearchModel = searchModel;
 
             switch (sortOrder)
             {
