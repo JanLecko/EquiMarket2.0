@@ -1,0 +1,56 @@
+﻿@model EquiMarket.Models.SearchModels.HorseSearchModel
+@using EquiMarket.Models.SearchModels;
+
+@{
+    ViewBag.Title = "Search";
+
+    string createdClass = "";
+    string ageClass = "";
+    string priceClass = "";
+    string kvhClass = "";
+
+    string sortOrder = Request.Params["sortOrder"];
+
+    if (!String.IsNullOrWhiteSpace(sortOrder))
+    {
+        if (sortOrder.Contains("Created")) { createdClass = "active"; }
+        else if (sortOrder.Contains("Age")) { ageClass = "active"; }
+        else if (sortOrder.Contains("Price")) { priceClass = "active"; }
+        else if (sortOrder.Contains("KVH")) { kvhClass = "active"; }
+    }
+    else
+    {
+        createdClass = "active";
+    }
+}
+
+<div class="page-header">
+    <h1>Horses for sale</h1>
+</div>
+
+<div class="col-lg-12">
+
+    @Html.Partial("_AjaxFilter", @Model as HorseSearchModel)
+
+    <hr />
+
+    <h3>Sorter</h3>
+
+    <div class="bs-example">
+        <ul class="nav nav-pills">
+            <li class="@createdClass"> @Html.ActionLink("Created", "List", new { sortOrder = ViewBag.CreatedSortParm })</li>
+            <li class="@ageClass">@Html.ActionLink("Age", "List", new { sortOrder = ViewBag.AgeSortParm })</li>
+            <li class="@priceClass">@Html.ActionLink("Price", "List", new { sortOrder = ViewBag.PriceSortParm })</li>
+            <li class="@kvhClass">@Html.ActionLink("KVH", "List", new { sortOrder = ViewBag.KVHSortParm })</li>
+        </ul>
+    </div>
+
+    <hr />
+
+    @Html.Partial("_SearchResult", @Model as HorseSearchModel)
+</div>
+
+
+
+
+
