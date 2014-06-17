@@ -1,12 +1,27 @@
 ﻿@using EquiMarket.Models.SearchModels
 @model HorseSearchModel
 
+@{
+    AjaxOptions options = new AjaxOptions();
+
+    options.HttpMethod = "POST";
+    options.Confirm = "Do you wish to submit this form?";
+    options.OnBegin = "OnBegin";
+    options.OnComplete = "OnComplete";
+    options.OnFailure = "OnFailure";
+    options.OnSuccess = "OnSuccess";
+    options.LoadingElementId = "ajaxProgress";
+    options.LoadingElementDuration = 1000;
+    options.UpdateTargetId = "divResponse";
+    options.InsertionMode = InsertionMode.InsertAfter;
+}
+
 
 <div class="well well-lg">
 
     <h3>Filter</h3>
 
-    @using (Html.BeginForm("List", "Horse", FormMethod.Get))
+    @using (Ajax.BeginForm("Search", "Horse", options))
     {
         <fieldset>
 
@@ -43,7 +58,7 @@
                     @Html.ValidationMessageFor(Model => Model.AgeTo)
                 </div>
             </div>
-
+             
             @*KVH*@
             <div class="form-group">
                 @Html.LabelFor(model => model.KVHFrom, new { @class = "control-label col-md-2" })
@@ -55,19 +70,23 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.KVHTo, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                 <div class="col-md-10">
                     @Html.TextBoxFor(Model => Model.KVHTo)
                     @Html.ValidationMessageFor(Model => Model.KVHTo)
                 </div>
             </div>
 
             @*Breed*@
-            
-
-
 
             <input type="submit" value="Search" />
+
         </fieldset>
     }
+
+    <div id="ajaxProgress" />
+    <div id="divResponse" />
+    <div id="divMsg" />
+
 </div>
+
 
