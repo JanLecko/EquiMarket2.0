@@ -30,9 +30,6 @@ namespace EquiMarket.Controllers
         {
             var horses = db.Horses.Include(x => x.Images);
 
-            bindSearchModel(horses, searchModel);
-            horses = bindFilter(horses, sortOrder);
-
             ViewBag.CurrentSort = sortOrder;
             ViewBag.CreatedSortParm = String.IsNullOrEmpty(sortOrder) ? "Created_desc" : "";
             ViewBag.AgeSortParm = sortOrder == "Age" ? "Age_desc" : "Age";
@@ -40,7 +37,33 @@ namespace EquiMarket.Controllers
             ViewBag.KVHSortParm = sortOrder == "KVH" ? "KVH_desc" : "KVH";
             ViewBag.SearchModel = searchModel;
 
-            
+            switch (sortOrder)
+            {
+                case "Created_desc":
+                    horses = horses.OrderByDescending(i => i.Created);
+                    break;
+                case "Age":
+                    horses = horses.OrderBy(i => i.BirthDate);
+                    break;
+                case "Age_desc":
+                    horses = horses.OrderByDescending(i => i.BirthDate);
+                    break;
+                case "Price":
+                    horses = horses.OrderBy(i => i.Price);
+                    break;
+                case "Price_desc":
+                    horses = horses.OrderByDescending(i => i.Price);
+                    break;
+                case "KVH":
+                    horses = horses.OrderBy(i => i.KVH);
+                    break;
+                case "KVH_desc":
+                    horses = horses.OrderByDescending(i => i.KVH);
+                    break;
+                default:
+                    horses = horses.OrderBy(i => i.Created);
+                    break;
+            }
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
@@ -48,31 +71,6 @@ namespace EquiMarket.Controllers
             return View(horses.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult Search() 
-        {
-            return View();
-        }
-
-        [HttpPost]    
-        public ActionResult Search(HorseSearchModel searchModel, string sortOrder, int? page)
-        {
-            var horses = db.Horses.Include(x => x.Images);
-
-            bindSearchModel(horses, searchModel);
-            horses = bindFilter(horses, sortOrder);
-
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.CreatedSortParm = String.IsNullOrEmpty(sortOrder) ? "Created_desc" : "";
-            ViewBag.AgeSortParm = sortOrder == "Age" ? "Age_desc" : "Age";
-            ViewBag.PriceSortParm = sortOrder == "Price" ? "Price_desc" : "Price";
-            ViewBag.KVHSortParm = sortOrder == "KVH" ? "KVH_desc" : "KVH";
-            ViewBag.SearchModel = searchModel;
-
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-
-            return PartialView("_SearchResults", horses.ToPagedList(pageNumber, pageSize));
-        }
 
         // GET: /Horse/Details/5
         public ActionResult Details(int? id)
@@ -231,80 +229,6 @@ namespace EquiMarket.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private void bindSearchModel(IQueryable<Horse> query, HorseSearchModel searchModel) 
-        {
-            if (searchModel.HasValue)
-            {
-                if (searchModel.AgeFrom.HasValue)
-                {
-                    query.Where(i => i.BirthDate <= DateTime.Now.AddYears(-searchModel.AgeFrom.Value));
-                }
-                if (searchModel.AgeTo.HasValue)
-                {
-                    query.Where(i => i.BirthDate >= DateTime.Now.AddYears(-searchModel.AgeTo.Value));
-                }
-                if (searchModel.KVHFrom.HasValue)
-                {
-                    query.Where(i => i.KVH >= searchModel.KVHFrom.Value);
-                }
-                if (searchModel.KVHTo.HasValue)
-                {
-                    query.Where(i => i.KVH <= searchModel.KVHTo.Value);
-                }
-                if (searchModel.PriceFrom.HasValue)
-                {
-                    query.Where(i => i.Price >= searchModel.PriceFrom.Value);
-                }
-                if (searchModel.PriceTo.HasValue)
-                {
-                    query.Where(i => i.Price <= searchModel.PriceTo.Value);
-                }
-                if (searchModel.Breeds != null && searchModel.Breeds.Length > 0)
-                {
-                    query.Where(i => searchModel.Breeds.Contains(i.BreedID));
-                }
-            }
-        }
-
-        private IQueryable<Horse> bindFilter(IQueryable<Horse> horses, string sortOrder)
-        {
-            switch (sortOrder)
-            {
-                case "Created_desc":
-                    horses = horses.OrderByDescending(i => i.Created);
-                    return horses;
-                    //break;
-                case "Age":
-                    horses = horses.OrderBy(i => i.BirthDate);
-                    return horses;
-                    //break;
-                case "Age_desc":
-                    horses = horses.OrderByDescending(i => i.BirthDate);
-                    return horses;
-                    //break;
-                case "Price":
-                    horses = horses.OrderBy(i => i.Price);
-                    return horses;
-                    //break;
-                case "Price_desc":
-                    horses = horses.OrderByDescending(i => i.Price);
-                    return horses;
-                    //break;
-                case "KVH":
-                    horses = horses.OrderBy(i => i.KVH);
-                    return horses;
-                    //break;
-                case "KVH_desc":
-                    horses = horses.OrderByDescending(i => i.KVH);
-                    return horses;
-                    //break;
-                default:
-                    horses = horses.OrderBy(i => i.Created);
-                    return horses;
-                    //break;
-            }
         }
     }
 }
